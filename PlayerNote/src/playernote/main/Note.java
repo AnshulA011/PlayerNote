@@ -2,21 +2,22 @@ package playernote.main;
 
 import java.util.Date;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Note {
 	private String msg;
 	private Date date;
-	private Player creator;
+	private CommandSender sender;
 	private Player other;
 	private ID type;
 	private int noteID;
-	
-	public Note(Player creator, Player other, Date date, String msg, ID type, int noteID) {
+	public Note() {}
+	public Note(CommandSender sender, Player other, Date date, String msg, ID type, int noteID) {
 		this.msg = msg;
 		this.date = date;
-		this.creator = creator;
+		this.sender = sender;
 		this.other = other;
 		this.type = type;
 		this.noteID = noteID;
@@ -33,11 +34,11 @@ public class Note {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public Player getCreator() {
-		return creator;
+	public CommandSender getSender() {
+		return sender;
 	}
-	public void setCreator(Player creator) {
-		this.creator = creator;
+	public void setSender(CommandSender sender) {
+		this.sender = sender;
 	}
 	public Player getOther() {
 		return other;

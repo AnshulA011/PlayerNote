@@ -1,6 +1,5 @@
 package playernote.cmds;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.bukkit.Bukkit;
@@ -27,8 +26,8 @@ public class PlayerNote implements CommandExecutor{
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (label.equalsIgnoreCase("playernote") && sender instanceof Player && sender.hasPermission("playernote.permission")) {
-			Player player = (Player) sender;
+		if (label.equalsIgnoreCase("playernote") && sender.hasPermission("playernote.permission")) {
+
 			if (args.length == 3) {
 				for (Player other : Bukkit.getOnlinePlayers()) {
 					if (other.getName() == args[0]) {
@@ -43,7 +42,7 @@ public class PlayerNote implements CommandExecutor{
 						}
 						if (type != null) {
 							Date currentDate = new Date();
-							notehdl.addNote(player, other, currentDate, args[3], type);
+							notehdl.addNote(sender, other, currentDate, args[3], type);
 						}
 						else {
 							return false;
