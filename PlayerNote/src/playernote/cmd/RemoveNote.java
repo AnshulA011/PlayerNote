@@ -23,8 +23,9 @@ public class RemoveNote implements CommandExecutor{
 				if(player != null) {
 					if (notehdlr.hasNotes(player.getUniqueId())) {
 						int value = Integer.valueOf(args[1]);
-						if (value >= 0) {
+						if (value >= 1) {
 							if(notehdlr.getNotes(player.getUniqueId()) != null) {
+								value -= 1;
 								notehdlr.removeNote(player.getUniqueId(), value);
 							}
 							else {

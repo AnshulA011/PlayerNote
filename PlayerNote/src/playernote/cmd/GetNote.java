@@ -16,7 +16,7 @@ import playernote.plugin.NoteHandler;
 
 public class GetNote implements CommandExecutor{
 	//How many notes to display in chat
-	private final int DISPLAYAMT = 8;
+	private final int DISPLAYAMT = 10;
 	private NoteHandler notehdlr;
 	public GetNote(NoteHandler notehdlr) {
 		this.notehdlr = notehdlr;
@@ -107,27 +107,28 @@ public class GetNote implements CommandExecutor{
 						startIndex = endIndex - DISPLAYAMT;
 						sender.sendMessage(player.getName() + "'s Notes");
 						sender.sendMessage("----------------------------");
-						SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+						SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
 						//Limiting displaying of notes to the amount specified in the variable DISPLAYAMT
 						for(int i = endIndex; i >= startIndex; i--) {
 							if(i < 0) {
 								break;
 							}
 							if (i <= sizeOfNotes-1) {
-								String msg = "[" + format.format(pNotes.get(i).getDate())+ "] " + pNotes.get(i).getSender() + ": " + pNotes.get(i).getMsg();
+								String msg = " " + format.format(pNotes.get(i).getDate())+ " " + pNotes.get(i).getSender() + ": " + pNotes.get(i).getMsg();
 								if (constantType != null) {
 									if(pNotes.get(i).getType() == constantType)
 										sender.sendMessage(constantType.getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i))) + ". " + "(" + args[1] + ")" + msg);
 								}
 								else {
+									int num = notehdlr.getNotes(pid).indexOf(pNotes.get(i)) + 1;
 									if (pNotes.get(i).getType() == ID.POSITIVE) {
-										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i))) + ". " + "(+)" + msg);
+										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(num) + ". " + "(+)" + msg);
 									}
 									else if(pNotes.get(i).getType() == ID.NEGATIVE) {
-										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i)))+ ". " +"(-)" + msg);
+										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(num)+ ". " +"(-)" + msg);
 									}
 									else if(pNotes.get(i).getType() == ID.ISSUE) {
-										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i)))+ ". "+ "(!)" + msg);
+										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(num)+ ". "+ "(!)" + msg);
 									}
 								}
 							}
