@@ -29,7 +29,7 @@ public class CreateNote implements CommandExecutor{
 			if (other != null) {
 				String msg = "";
 				for (int i = 2; i < args.length; i++) {
-					msg += args[i];
+					msg += args[i] + " ";
 				}
 				ID type = null;
 				

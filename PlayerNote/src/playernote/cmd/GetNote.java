@@ -37,18 +37,49 @@ public class GetNote implements CommandExecutor{
 					sender.sendMessage("----------------------------");
 					SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 					if(notehdlr.hasNotes(player.getUniqueId())) {
-						for(Note note : notehdlr.getNotes(player.getUniqueId())) {
-							
-							String msg = "[" + format.format(note.getDate())+ "] " + note.getSender().getName() + ": " + note.getMsg();
-							
-							if (note.getType() == ID.POSITIVE) {
-									sender.sendMessage(ChatColor.GREEN + "(+)" + msg);
+						if(args.length == 1) {
+							for(Note note : notehdlr.getNotes(player.getUniqueId())) {
+								
+								String msg = "[" + format.format(note.getDate())+ "] " + note.getSender().getName() + ": " + note.getMsg();
+								
+								if (note.getType() == ID.POSITIVE) {
+										sender.sendMessage(ChatColor.GREEN + "(+)" + msg);
+								}
+								else if(note.getType() == ID.NEGATIVE) {
+									sender.sendMessage(ChatColor.RED + "(-)" + msg);
+								}
+								else if(note.getType() == ID.ISSUE) {
+									sender.sendMessage(ChatColor.DARK_RED + "(!)" + msg);
+								}
 							}
-							else if(note.getType() == ID.NEGATIVE) {
-								sender.sendMessage(ChatColor.RED + "(-)" + msg);
+						}
+						else{
+							ID goalType = null;
+							String typeMsg = "";
+							if (args[1].equalsIgnoreCase("+")) {
+								goalType = ID.POSITIVE;
+								typeMsg = ChatColor.GREEN + "(+)";
 							}
-							else if(note.getType() == ID.ISSUE) {
-								sender.sendMessage(ChatColor.DARK_RED + "(!)" + msg);
+							else if (args[1].equalsIgnoreCase("-")) {
+								goalType = ID.NEGATIVE;
+								typeMsg = ChatColor.RED + "(-)";
+							}
+							else if (args[1].equalsIgnoreCase("!")) {
+								goalType = ID.ISSUE;
+								typeMsg = ChatColor.DARK_RED + "(!)";
+							}
+							
+							if (goalType != null) {
+								for(Note note : notehdlr.getNotes(player.getUniqueId())) {
+									if (note.getType() == goalType) {
+										String msg = "[" + format.format(note.getDate())+ "] " + note.getSender().getName() + ": " + note.getMsg();
+										sender.sendMessage(typeMsg + msg);
+									}
+									
+								}								
+							}
+							else {
+								sender.sendMessage("Invalid type!");
 							}
 						}
 					}
