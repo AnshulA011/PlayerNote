@@ -1,13 +1,20 @@
 main: playernote.plugin.NotePlugin
 name: PlayerNote
 version: 0.01
-author: Cj, Link, Gokborg
+author: Gokborg, Cj, Link
 commands:
   playernote:
     description: Creates a new playernote
+    aliases: ["pnote", "note"]
     usage: /playernote [player] [+, -, !] [msg]
     permission: playernote.permission
   getplayernote:
     description: Get notes of a player
+    aliases: ["getnote", "getpnote"]
     usage: /getplayernote [player] [+ or - or ! or blank]
     permission: getplayernote.permission
+  rmplayernote:
+    description: Get notes of a player
+    aliases: ["rmnote", "rmpnote"]
+    usage: /rmplayernote [player] [number]
+    permission: rmplayernote.permission

@@ -4,11 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import playernote.plugin.ID;
 import playernote.plugin.Note;
@@ -34,7 +33,7 @@ public class GetNote implements CommandExecutor{
 		if (label.equalsIgnoreCase("getplayernote") && sender.hasPermission("getplayernote.permission") && args.length >= 1) {
 
 			for (UUID pid : notehdlr.getServerNotes().keySet()) {
-				Player player = (Player) Bukkit.getOfflinePlayer(pid);
+				OfflinePlayer player = Bukkit.getOfflinePlayer(pid);
 				if (player.getName().equalsIgnoreCase(args[0])) {
 					sender.sendMessage(player.getName() + "'s Notes");
 					sender.sendMessage("----------------------------");
@@ -45,13 +44,13 @@ public class GetNote implements CommandExecutor{
 							String msg = "[" + format.format(note.getDate())+ "] " + note.getSender() + ": " + note.getMsg();
 							
 							if (note.getType() == ID.POSITIVE) {
-								sender.sendMessage(ChatColor.GREEN + "(+)" + msg);
+								sender.sendMessage(note.getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(note)) + ". " + "(+)" + msg);
 							}
 							else if(note.getType() == ID.NEGATIVE) {
-								sender.sendMessage(ChatColor.RED + "(-)" + msg);
+								sender.sendMessage(note.getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(note))+ ". " +"(-)" + msg);
 							}
 							else if(note.getType() == ID.ISSUE) {
-								sender.sendMessage(ChatColor.DARK_RED + "(!)" + msg);
+								sender.sendMessage(note.getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(note))+ ". "+ "(!)" + msg);
 							}
 						}
 					}
@@ -60,22 +59,22 @@ public class GetNote implements CommandExecutor{
 						String typeMsg = "";
 						if (args[1].equalsIgnoreCase("+")) {
 							goalType = ID.POSITIVE;
-							typeMsg = ChatColor.GREEN + "(+)";
+							typeMsg = ID.POSITIVE.getColor() + "(+)";
 						}
 						else if (args[1].equalsIgnoreCase("-")) {
 							goalType = ID.NEGATIVE;
-							typeMsg = ChatColor.RED + "(-)";
+							typeMsg = ID.NEGATIVE.getColor() + "(-)";
 						}
 						else if (args[1].equalsIgnoreCase("!")) {
 							goalType = ID.ISSUE;
-							typeMsg = ChatColor.DARK_RED + "(!)";
+							typeMsg = ID.ISSUE.getColor() + "(!)";
 						}
 						
 						if (goalType != null) {
 							for(Note note : notehdlr.getNotes(player.getUniqueId())) {
 								if (note.getType() == goalType) {
 									String msg = "[" + format.format(note.getDate())+ "] " + note.getSender()+ ": " + note.getMsg();
-									sender.sendMessage(typeMsg + msg);
+									sender.sendMessage(typeMsg + Integer.toString(notehdlr.getNotes(pid).indexOf(note)) + ". " + msg);
 								}
 								
 							}								

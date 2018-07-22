@@ -13,9 +13,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import playernote.cmd.CreateNote;
 import playernote.cmd.GetNote;
+import playernote.cmd.RemoveNote;
 
 public class NotePlugin extends JavaPlugin{
 	private HashMap<UUID, ArrayList<Note>> servernotes;
+	//TODO: Add pages to notes
+	//TODO: Remove option for notes
 	
 	public void onEnable() {
 		servernotes = readNotes();
@@ -26,6 +29,7 @@ public class NotePlugin extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new PlayerLogin(notehdlr), this);
 		getCommand("playernote").setExecutor(new CreateNote(notehdlr));
 		getCommand("getplayernote").setExecutor(new GetNote(notehdlr));
+		getCommand("rmplayernote").setExecutor(new RemoveNote(notehdlr));
 	}
 	
 	public void onDisable() {
