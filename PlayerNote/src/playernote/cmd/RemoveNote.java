@@ -25,8 +25,13 @@ public class RemoveNote implements CommandExecutor{
 						int value = Integer.valueOf(args[1]);
 						if (value >= 1) {
 							if(notehdlr.getNotes(player.getUniqueId()) != null) {
+								if (value > notehdlr.getNotes(player.getUniqueId()).size()) {
+									sender.sendMessage("Invalid number!");
+									return false;
+								}
 								value -= 1;
 								notehdlr.removeNote(player.getUniqueId(), value);
+								sender.sendMessage("The note has been removed!");
 							}
 							else {
 								sender.sendMessage("The player's list is already empty!");
