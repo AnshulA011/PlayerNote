@@ -19,8 +19,13 @@ public class WipeServerNotes implements CommandExecutor{
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("clearservernotes") && args.length == 1 && sender.hasPermission("clearservernotes.permission")) {
-			notehdlr.setServerNotes(new HashMap<UUID, ArrayList<Note>>());
-			return true;
+			if (args[0].equalsIgnoreCase("confirm")) {
+				notehdlr.setServerNotes(new HashMap<UUID, ArrayList<Note>>());
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 		return false;
 	}

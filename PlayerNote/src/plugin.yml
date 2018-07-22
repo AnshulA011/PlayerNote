@@ -14,12 +14,12 @@ commands:
     usage: /getnote[player] [+ or - or ! or blank] [page number]
     permission: getplayernote.permission
   rmplayernote:
-    description: Get notes of a player
+    description: Remove a player note
     aliases: [rmnote, rmpnote]
     usage: /rmnote [player] [number]
     permission: rmplayernote.permission
   clearplayernotes:
-    description: Get notes of a player
+    description: Clear all the notes of a player
     aliases: [clearpnote, clearnote]
     usage: /clearpnote [player] 
     permission: clearplayernote.permission
