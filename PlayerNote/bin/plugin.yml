@@ -11,7 +11,7 @@ commands:
   getplayernote:
     description: Get notes of a player
     aliases: ["getnote", "getpnote"]
-    usage: /getplayernote [player] [+ or - or ! or blank]
+    usage: /getplayernote [player] [+ or - or ! or blank] [page number]
     permission: getplayernote.permission
   rmplayernote:
     description: Get notes of a player

@@ -16,6 +16,4 @@ public enum ID {
 	private ID (ChatColor color) {
 		this.color = color;
 	}
-
-
 }
