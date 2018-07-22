@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -21,11 +20,11 @@ public class NoteHandler {
 		if(serverNotes.containsKey(pid)) {
 			
 			int noteId = serverNotes.get(pid).size()+1;
-			serverNotes.get(pid).add(new Note(sender, other, date, msg, type, noteId));
+			serverNotes.get(pid).add(new Note(sender.getName(), other.getName(), date, msg, type, noteId));
 		}
 		else {
-			sender.sendMessage(ChatColor.DARK_RED + "(!)" + msg);	serverNotes.put(pid, new ArrayList<Note>());
-			serverNotes.get(pid).add(new Note(sender, other, date, msg, type, 1));
+			serverNotes.put(pid, new ArrayList<Note>());
+			serverNotes.get(pid).add(new Note(sender.getName(), other.getName(), date, msg, type, 1));
 		}
 	}
 	public void removeNote(UUID playerUUID, int noteId) {
@@ -34,6 +33,9 @@ public class NoteHandler {
 	public ArrayList<Note> getNotes(UUID playerUUID){
 		return serverNotes.get(playerUUID);	
 	}
+	public HashMap<UUID, ArrayList<Note>> getServerNotes(){
+		return serverNotes;
+	}
 	public boolean hasNotes(UUID playerUUID) {
 		if(serverNotes.containsKey(playerUUID)) {
 			return true;
@@ -41,5 +43,8 @@ public class NoteHandler {
 		else{
 			return false;
 		}
+	}
+	public void createPage(UUID pid) {
+		serverNotes.put(pid, new ArrayList<Note>());
 	}
 }

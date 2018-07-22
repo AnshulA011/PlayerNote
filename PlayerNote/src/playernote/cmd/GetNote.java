@@ -1,6 +1,7 @@
 package playernote.cmd;
 
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,66 +32,63 @@ public class GetNote implements CommandExecutor{
 		 */
 
 		if (label.equalsIgnoreCase("getplayernote") && sender.hasPermission("getplayernote.permission") && args.length >= 1) {
-			for (Player player : Bukkit.getOnlinePlayers()) {
+
+			for (UUID pid : notehdlr.getServerNotes().keySet()) {
+				Player player = (Player) Bukkit.getOfflinePlayer(pid);
 				if (player.getName().equalsIgnoreCase(args[0])) {
 					sender.sendMessage(player.getName() + "'s Notes");
 					sender.sendMessage("----------------------------");
 					SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-					if(notehdlr.hasNotes(player.getUniqueId())) {
-						if(args.length == 1) {
-							for(Note note : notehdlr.getNotes(player.getUniqueId())) {
-								
-								String msg = "[" + format.format(note.getDate())+ "] " + note.getSender().getName() + ": " + note.getMsg();
-								
-								if (note.getType() == ID.POSITIVE) {
-										sender.sendMessage(ChatColor.GREEN + "(+)" + msg);
-								}
-								else if(note.getType() == ID.NEGATIVE) {
-									sender.sendMessage(ChatColor.RED + "(-)" + msg);
-								}
-								else if(note.getType() == ID.ISSUE) {
-									sender.sendMessage(ChatColor.DARK_RED + "(!)" + msg);
-								}
-							}
-						}
-						else{
-							ID goalType = null;
-							String typeMsg = "";
-							if (args[1].equalsIgnoreCase("+")) {
-								goalType = ID.POSITIVE;
-								typeMsg = ChatColor.GREEN + "(+)";
-							}
-							else if (args[1].equalsIgnoreCase("-")) {
-								goalType = ID.NEGATIVE;
-								typeMsg = ChatColor.RED + "(-)";
-							}
-							else if (args[1].equalsIgnoreCase("!")) {
-								goalType = ID.ISSUE;
-								typeMsg = ChatColor.DARK_RED + "(!)";
-							}
+					if(args.length == 1) {
+						for(Note note : notehdlr.getNotes(player.getUniqueId())) {
 							
-							if (goalType != null) {
-								for(Note note : notehdlr.getNotes(player.getUniqueId())) {
-									if (note.getType() == goalType) {
-										String msg = "[" + format.format(note.getDate())+ "] " + note.getSender().getName() + ": " + note.getMsg();
-										sender.sendMessage(typeMsg + msg);
-									}
-									
-								}								
+							String msg = "[" + format.format(note.getDate())+ "] " + note.getSender() + ": " + note.getMsg();
+							
+							if (note.getType() == ID.POSITIVE) {
+								sender.sendMessage(ChatColor.GREEN + "(+)" + msg);
 							}
-							else {
-								sender.sendMessage("Invalid type!");
+							else if(note.getType() == ID.NEGATIVE) {
+								sender.sendMessage(ChatColor.RED + "(-)" + msg);
+							}
+							else if(note.getType() == ID.ISSUE) {
+								sender.sendMessage(ChatColor.DARK_RED + "(!)" + msg);
 							}
 						}
 					}
-				}
-				else {
-					sender.sendMessage("Invalid name!");
-					return false;
+					else{
+						ID goalType = null;
+						String typeMsg = "";
+						if (args[1].equalsIgnoreCase("+")) {
+							goalType = ID.POSITIVE;
+							typeMsg = ChatColor.GREEN + "(+)";
+						}
+						else if (args[1].equalsIgnoreCase("-")) {
+							goalType = ID.NEGATIVE;
+							typeMsg = ChatColor.RED + "(-)";
+						}
+						else if (args[1].equalsIgnoreCase("!")) {
+							goalType = ID.ISSUE;
+							typeMsg = ChatColor.DARK_RED + "(!)";
+						}
+						
+						if (goalType != null) {
+							for(Note note : notehdlr.getNotes(player.getUniqueId())) {
+								if (note.getType() == goalType) {
+									String msg = "[" + format.format(note.getDate())+ "] " + note.getSender()+ ": " + note.getMsg();
+									sender.sendMessage(typeMsg + msg);
+								}
+								
+							}								
+						}
+						else {
+							sender.sendMessage("Invalid type!");
+						}
+					}
+					return true;
 				}
 			}
-			
-			return true;
+			sender.sendMessage("Unknown Minecraft Username!");
+			return false;
 		}
 		return false;
 	}

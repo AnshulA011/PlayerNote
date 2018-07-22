@@ -1,20 +1,19 @@
 package playernote.plugin;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-
-public class Note {
+public class Note implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String msg;
 	private Date date;
-	private CommandSender sender;
-	private Player other;
+	private String sender;
+	private String other;
 	private ID type;
 	private int noteID;
-	public Note() {}
-	public Note(CommandSender sender, Player other, Date date, String msg, ID type, int noteID) {
+	
+	public Note(String sender, String other, Date date, String msg, ID type, int noteID) {
 		this.msg = msg;
 		this.date = date;
 		this.sender = sender;
@@ -34,16 +33,16 @@ public class Note {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public CommandSender getSender() {
+	public String getSender() {
 		return sender;
 	}
-	public void setSender(CommandSender sender) {
+	public void setSender(String sender) {
 		this.sender = sender;
 	}
-	public Player getOther() {
+	public String getOther() {
 		return other;
 	}
-	public void setOther(Player other) {
+	public void setOther(String other) {
 		this.other = other;
 	}
 	public ID getType() {
