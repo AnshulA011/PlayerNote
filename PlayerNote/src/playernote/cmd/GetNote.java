@@ -46,7 +46,7 @@ public class GetNote implements CommandExecutor{
 		 * 2. Returns all notes
 		 */
 		
-		if (label.equalsIgnoreCase("getplayernote") && sender.hasPermission("getplayernote.permission") && args.length >= 1) {
+		if (cmd.getName().equalsIgnoreCase("getplayernote") && sender.hasPermission("getplayernote.permission") && args.length >= 1) {
 			//Going through all players in the server notes
 			for (UUID pid : notehdlr.getServerNotes().keySet()) {
 				OfflinePlayer player = Bukkit.getOfflinePlayer(pid);
@@ -106,24 +106,24 @@ public class GetNote implements CommandExecutor{
 						SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 						
 						//Limiting displaying of notes to the amount specified in the variable DISPLAYAMT
-						for(int i = startIndex; i < endIndex; i++) {
-							if (i > sizeOfNotes-1) {
-								break;
-							}
-							String msg = "[" + format.format(pNotes.get(i).getDate())+ "] " + pNotes.get(i).getSender() + ": " + pNotes.get(i).getMsg();
-							if (constantType != null) {
-								if(pNotes.get(i).getType() == constantType)
-									sender.sendMessage(constantType.getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i))) + ". " + "(" + args[1] + ")" + msg);
-							}
-							else {
-								if (pNotes.get(i).getType() == ID.POSITIVE) {
-									sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i))) + ". " + "(+)" + msg);
+						for(int i = endIndex; i >= startIndex; i--) {
+							
+							if (i <= sizeOfNotes-1) {
+								String msg = "[" + format.format(pNotes.get(i).getDate())+ "] " + pNotes.get(i).getSender() + ": " + pNotes.get(i).getMsg();
+								if (constantType != null) {
+									if(pNotes.get(i).getType() == constantType)
+										sender.sendMessage(constantType.getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i))) + ". " + "(" + args[1] + ")" + msg);
 								}
-								else if(pNotes.get(i).getType() == ID.NEGATIVE) {
-									sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i)))+ ". " +"(-)" + msg);
-								}
-								else if(pNotes.get(i).getType() == ID.ISSUE) {
-									sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i)))+ ". "+ "(!)" + msg);
+								else {
+									if (pNotes.get(i).getType() == ID.POSITIVE) {
+										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i))) + ". " + "(+)" + msg);
+									}
+									else if(pNotes.get(i).getType() == ID.NEGATIVE) {
+										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i)))+ ". " +"(-)" + msg);
+									}
+									else if(pNotes.get(i).getType() == ID.ISSUE) {
+										sender.sendMessage(pNotes.get(i).getType().getColor() + Integer.toString(notehdlr.getNotes(pid).indexOf(pNotes.get(i)))+ ". "+ "(!)" + msg);
+									}
 								}
 							}
 						}

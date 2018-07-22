@@ -17,8 +17,8 @@ public class RemoveNote implements CommandExecutor{
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (label.equalsIgnoreCase("rmplayernote") && sender.hasPermission("rmplayernote.permission")) {
-			if(args.length >= 2) {
+		if (cmd.getName().equalsIgnoreCase("rmplayernote") && sender.hasPermission("rmplayernote.permission")) {
+			if(args.length == 2) {
 				OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
 				if(player != null) {
 					if (notehdlr.hasNotes(player.getUniqueId())) {

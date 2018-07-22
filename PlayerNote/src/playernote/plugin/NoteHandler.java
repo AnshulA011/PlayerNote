@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class NoteHandler {
@@ -15,26 +15,26 @@ public class NoteHandler {
 		this.serverNotes = serverNotes;
 	}
 	
-	public void addNote(CommandSender sender, Player other, Date date, String msg, ID type) {
+	public void addNote(CommandSender sender, OfflinePlayer other, Date date, String msg, ID type) {
 		UUID pid = other.getUniqueId();
-		if(serverNotes.containsKey(pid)) {
-			
-			int noteId = serverNotes.get(pid).size()+1;
-			serverNotes.get(pid).add(new Note(sender.getName(), other.getName(), date, msg, type, noteId));
-		}
-		else {
-			serverNotes.put(pid, new ArrayList<Note>());
-			serverNotes.get(pid).add(new Note(sender.getName(), other.getName(), date, msg, type, 1));
-		}
+		int noteId = serverNotes.get(pid).size()+1;
+		serverNotes.get(pid).add(new Note(sender.getName(), other.getName(), date, msg, type, noteId));
 	}
 	public void removeNote(UUID playerUUID, int noteId) {
 		serverNotes.get(playerUUID).remove(noteId);
+	}
+	public void wipe(UUID playerUUID) {
+		serverNotes.remove(playerUUID);
+		serverNotes.put(playerUUID, new ArrayList<Note>());
 	}
 	public ArrayList<Note> getNotes(UUID playerUUID){
 		return serverNotes.get(playerUUID);	
 	}
 	public HashMap<UUID, ArrayList<Note>> getServerNotes(){
 		return serverNotes;
+	}
+	public void setServerNotes(HashMap<UUID, ArrayList<Note>> serverNotes) {
+		this.serverNotes = serverNotes;
 	}
 	public boolean hasNotes(UUID playerUUID) {
 		if(serverNotes.containsKey(playerUUID)) {

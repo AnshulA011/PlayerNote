@@ -7,7 +7,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import playernote.plugin.ID;
 import playernote.plugin.NoteHandler;
@@ -21,9 +20,9 @@ public class CreateNote implements CommandExecutor{
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (label.equalsIgnoreCase("playernote") && args.length >= 3){
+		if (cmd.getName().equalsIgnoreCase("playernote") && args.length >= 3){
 			OfflinePlayer other = Bukkit.getOfflinePlayer(args[0]);
-			if (Bukkit.getOfflinePlayer(args[0]).isOnline()) {
+			if (Bukkit.getOfflinePlayer(args[0]) != null) {
 				String msg = "";
 				for (int i = 2; i < args.length; i++) {
 					msg += args[i] + " ";
@@ -43,7 +42,7 @@ public class CreateNote implements CommandExecutor{
 					sender.sendMessage("Invalid type!");
 					return false;
 				}
-				notehdlr.addNote(sender, (Player) other, new Date(), msg, type);
+				notehdlr.addNote(sender, other, new Date(), msg, type);
 				sender.sendMessage("Note has been added!");
 			}
 			else {
