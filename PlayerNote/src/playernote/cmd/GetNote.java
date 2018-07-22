@@ -59,13 +59,12 @@ public class GetNote implements CommandExecutor{
 					
 					//Make it so that it always shows correct total pages
 					int sizeOfNotes = pNotes.size();
-					int totalPages = sizeOfNotes/DISPLAYAMT + 1;
+					int totalPages = sizeOfNotes/(DISPLAYAMT+1) + 1;
 					
 					int pageNum = 1;
 					
-					//Clamp the size of each page
-					int startIndex = (pageNum-1) * DISPLAYAMT;
-					int endIndex = pageNum * DISPLAYAMT;
+					int startIndex = 0;
+					int endIndex = 0;
 					ID constantType = null;
 					//For command 2 & 3, [Reference the multi-line comment below onCommand function]
 			
@@ -76,6 +75,8 @@ public class GetNote implements CommandExecutor{
 						if (args.length > 1) {
 							if (args.length == 3) {
 								pageNum = Integer.parseInt(args[2]);
+								startIndex = (pageNum-1) * DISPLAYAMT;
+								endIndex = pageNum * DISPLAYAMT;
 							}
 							if (pageNum > totalPages || pageNum <= 0) {
 								sender.sendMessage("Page number is invalid!");
@@ -99,15 +100,19 @@ public class GetNote implements CommandExecutor{
 						}		
 					}
 					
-					if (pageNum >= 1) {
+					if (pageNum >= 1 && pageNum <= totalPages) {
 						//Basic layout when sent
+						
+						endIndex = sizeOfNotes - 1 - ((pageNum - 1) * (DISPLAYAMT+1));
+						startIndex = endIndex - DISPLAYAMT;
 						sender.sendMessage(player.getName() + "'s Notes");
 						sender.sendMessage("----------------------------");
 						SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-						
 						//Limiting displaying of notes to the amount specified in the variable DISPLAYAMT
 						for(int i = endIndex; i >= startIndex; i--) {
-							
+							if(i < 0) {
+								break;
+							}
 							if (i <= sizeOfNotes-1) {
 								String msg = "[" + format.format(pNotes.get(i).getDate())+ "] " + pNotes.get(i).getSender() + ": " + pNotes.get(i).getMsg();
 								if (constantType != null) {
@@ -128,6 +133,9 @@ public class GetNote implements CommandExecutor{
 							}
 						}
 						sender.sendMessage("Page: " + pageNum + "/" + totalPages);
+					}
+					else {
+						return false;
 					}
 						
 					

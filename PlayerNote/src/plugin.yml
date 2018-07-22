@@ -6,25 +6,25 @@ commands:
   playernote:
     description: Creates a new playernote
     aliases: [pnote, note]
-    usage: /note [player] [+, -, !] [msg]
+    usage: /pnote <player> <+, -, !> <msg>
     permission: playernote.permission
   getplayernote:
     description: Get notes of a player
     aliases: [getnote, getpnote]
-    usage: /getnote[player] [+ or - or ! or blank] [page number]
+    usage: /getpnote <player> [+ or - or !] [page number]
     permission: getplayernote.permission
   rmplayernote:
     description: Remove a player note
     aliases: [rmnote, rmpnote]
-    usage: /rmnote [player] [number]
+    usage: /rmnote <player> <number>
     permission: rmplayernote.permission
   clearplayernotes:
     description: Clear all the notes of a player
     aliases: [clearpnote, clearnote]
-    usage: /clearpnote [player] 
+    usage: /clearpnote <player> 
     permission: clearplayernote.permission
   clearservernotes:
     description: Clears the servers notes
     aliases: [wipenotes, svrwipenotes]
-    usage: /wipenotes ["confirm"]
+    usage: /wipenotes <"confirm">
     permission: clearservernotes.permission

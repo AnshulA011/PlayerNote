@@ -1,14 +1,11 @@
 package playernote.cmd;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import playernote.plugin.Note;
 import playernote.plugin.NoteHandler;
 
 public class WipeServerNotes implements CommandExecutor{
@@ -20,7 +17,9 @@ public class WipeServerNotes implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("clearservernotes") && args.length == 1 && sender.hasPermission("clearservernotes.permission")) {
 			if (args[0].equalsIgnoreCase("confirm")) {
-				notehdlr.setServerNotes(new HashMap<UUID, ArrayList<Note>>());
+				for (UUID pid : notehdlr.getServerNotes().keySet()) {
+					notehdlr.getServerNotes().get(pid).clear();
+				}
 				return true;
 			}
 			else {
