@@ -43,14 +43,14 @@ public class CreateNote implements CommandExecutor{
 					type = ID.ISSUE;
 				}
 				else {
-					//sender.sendMessage("Invalid type!");
+					sender.sendMessage("Invalid type!");
 					return false;
 				}
 				notehdlr.addNote(sender, other, new Date(), msg, type);
-				//sender.sendMessage("Note has been added!");
+				sender.sendMessage("Note has been added!");
 			}
 			else {
-				//sender.sendMessage("Invalid player!");
+				sender.sendMessage("Invalid player!");
 				return false;
 			}
 			
