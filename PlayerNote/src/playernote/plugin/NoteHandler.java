@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -23,7 +24,7 @@ public class NoteHandler {
 			serverNotes.get(pid).add(new Note(sender, other, date, msg, type, noteId));
 		}
 		else {
-			serverNotes.put(pid, new ArrayList<Note>());
+			sender.sendMessage(ChatColor.DARK_RED + "(!)" + msg);	serverNotes.put(pid, new ArrayList<Note>());
 			serverNotes.get(pid).add(new Note(sender, other, date, msg, type, 1));
 		}
 	}
@@ -32,5 +33,13 @@ public class NoteHandler {
 	}
 	public ArrayList<Note> getNotes(UUID playerUUID){
 		return serverNotes.get(playerUUID);	
+	}
+	public boolean hasNotes(UUID playerUUID) {
+		if(serverNotes.containsKey(playerUUID)) {
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

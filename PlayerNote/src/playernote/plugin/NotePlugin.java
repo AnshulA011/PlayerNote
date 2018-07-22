@@ -7,10 +7,13 @@ import java.util.UUID;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import playernote.cmd.CreateNote;
+import playernote.cmd.GetNote;
 
 public class NotePlugin extends JavaPlugin{
 	public void onEnable() {
-		getCommand("playernote").setExecutor(new CreateNote(new NoteHandler(new HashMap<UUID, ArrayList<Note>>())));
+		NoteHandler notehdlr = new NoteHandler(new HashMap<UUID, ArrayList<Note>>());
+		getCommand("playernote").setExecutor(new CreateNote(notehdlr));
+		getCommand("getplayernote").setExecutor(new GetNote(notehdlr));
 	}
 	public void onDisable() {
 		

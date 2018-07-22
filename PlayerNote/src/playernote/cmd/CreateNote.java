@@ -22,35 +22,35 @@ public class CreateNote implements CommandExecutor{
 		if (label.equalsIgnoreCase("playernote") && args.length >= 3){
 			Player other = null;
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (p.getName() == args[1]) {
+				if (p.getName().equalsIgnoreCase(args[0])) {
 					other = p;
 				}
 			}
 			if (other != null) {
 				String msg = "";
-				for (int i = 3; i < args.length; i++) {
+				for (int i = 2; i < args.length; i++) {
 					msg += args[i];
 				}
 				ID type = null;
-				switch (args[2]) {
-				case "+":
+				
+				if (args[1].equalsIgnoreCase("+")) {
 					type = ID.POSITIVE;
-				case "-":
+				}
+				else if(args[1].equalsIgnoreCase("-")) {
 					type = ID.NEGATIVE;
-				case "!":
+				}
+				else if(args[1].equalsIgnoreCase("!")) {
 					type = ID.ISSUE;
 				}
-				if(type != null) {
-					notehdlr.addNote(sender, other, new Date(), msg, type);
-					sender.sendMessage("Note has been added!");
-				}
 				else {
-					sender.sendMessage("Invalid type!");
+					//sender.sendMessage("Invalid type!");
 					return false;
 				}
+				notehdlr.addNote(sender, other, new Date(), msg, type);
+				//sender.sendMessage("Note has been added!");
 			}
 			else {
-				sender.sendMessage("Invalid player!");
+				//sender.sendMessage("Invalid player!");
 				return false;
 			}
 			
