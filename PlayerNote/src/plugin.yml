@@ -1,0 +1,9 @@
+main: playernote.plugin.NotePlugin
+name: PlayerNote
+version: 0.01
+author: Cj, Link, Gokborg
+commands:
+  playernote:
+    description: Creates a new playernote
+    usage: /playernote [player] [+, -, !] [msg]
+    permission: playernote.permission

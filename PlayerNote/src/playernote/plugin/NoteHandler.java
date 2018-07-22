@@ -1,4 +1,4 @@
-package playernote.main;
+package playernote.plugin;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 
 public class NoteHandler {
 	private HashMap<UUID, ArrayList<Note>> serverNotes;

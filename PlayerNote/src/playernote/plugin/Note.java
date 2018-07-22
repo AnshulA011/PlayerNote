@@ -1,4 +1,4 @@
-package playernote.main;
+package playernote.plugin;
 
 import java.util.Date;
 

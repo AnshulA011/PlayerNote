@@ -1,4 +1,4 @@
-package playernote.main;
+package playernote.plugin;
 
 public enum ID {
 	POSITIVE,
